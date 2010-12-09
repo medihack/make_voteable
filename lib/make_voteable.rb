@@ -1,0 +1,3 @@
+module MakeVoteable
+  # Your code goes here...
+end
