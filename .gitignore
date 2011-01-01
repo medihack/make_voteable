@@ -1,6 +1,7 @@
 Gemfile.lock
 nbproject/*
 pkg/*
+doc/*
 *.gem
 *.log
 *.sqlite3
