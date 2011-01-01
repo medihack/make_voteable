@@ -5,11 +5,11 @@ Gem::Specification.new do |s|
   s.name        = "make_voteable"
   s.version     = MakeVoteable::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = []
-  s.email       = []
-  s.homepage    = "http://rubygems.org/gems/make_voteable"
-  s.summary     = "TODO: Write a gem summary"
-  s.description = "TODO: Write a gem description"
+  s.authors     = ["Kai Schlamp"]
+  s.email       = ["schlamp@gmx.de"]
+  s.homepage    = "http://github.com/medihack/make_voteable"
+  s.summary     = "Rails 3 voting extension"
+  s.description = "A user-centric voting extension for Rails 3 applications."
 
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "make_voteable"
