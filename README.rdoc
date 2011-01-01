@@ -1,0 +1,100 @@
+= MakeVoteable
+
+MakeVoteable is an extension for building a user-centric voting system for Rails 3 applications.
+It currently supports ActiveRecord models.
+
+== Installation
+
+add MakeVoteable to your Gemfile
+
+  gem 'make_voteable'
+
+afterwards execute
+
+  bundle install
+
+generate the required migration file
+
+  rails generate make_voteable
+
+also add +up_votes+ and +down_votes+ columns to the voter (e.g. User) and voteable (e.g. Question) model migrations
+
+  add_column :users, :up_votes, :integer, :null => false, :default => 0
+  add_column :users, :down_votes, :integer, :null => false, :default => 0
+  add_column :questions, :up_votes, :integer, :null => false, :default => 0
+  add_column :questions, :down_votes, :integer, :null => false, :default => 0
+
+migrate the database
+
+  rails db:migrate
+
+== Usage
+
+  # Specify a voteable model.
+  class Question < ActiveRecord::Base
+    make_voteable
+  end
+
+  # Specify a voter model.
+  class User < ActiveRecord::Base
+    make_voter
+  end
+
+  # Votes up the question by the user.
+  # If the user already voted the question up then an AlreadyVotedError is raised.
+  # If the same user already voted the question down then the vote is changed to an up vote.
+  user.up_vote(question)
+
+  # Votes the question up, but without raising an AlreadyVotedError when the user
+  # already voted the question up (it just ignores the vote).
+  user.up_vote!(question)
+
+  # Votes down the question by the user.
+  # If the user already voted the question down then an AlreadyVotedError is raised.
+  # If the same user already voted the question up then the vote is changed to an down vote.
+  user.down_vote(question)
+
+  # Votes the question down, but without raising an AlreadyVotedError when the user
+  # already voted the question down (it just ignores the vote).
+  user.down_vote!(question)
+
+  # Clears a already done vote by an user.
+  # If the user didn't vote for the question then a NotVotedError is raised.
+  user.unvote(question)
+
+  # Does not raise a NotVotedError if the user didn't vote for the question
+  # (it just ignores the unvote).
+  user.unvote!(question)
+
+  # The number of up votes for this question.
+  question.up_votes
+
+  # The number of down votes for this question.
+  question.down_votes
+
+  # The number of up votes the user did.
+  user.up_votes
+
+  # The number of down votes the user did.
+  user.down_votes
+
+  # up votes - down votes (may also be negative if there are more down votes than up votes)
+  question.votes
+
+  # Returns true if the question was voted by the user
+  user.voted?(question)
+
+  # Returns true if the question was up voted by the user, false otherwise
+  user.up_voted?(question)
+
+  # Returns true if the question was down voted by the user, false otherwise
+  user.down_voted?(question)
+
+== Testing
+
+MakeVoteable uses RSpec for testing and has a rake task for executing the provided specs
+
+  rake spec
+
+
+Copyright © 2010-2011 Kai Schlamp (http://www.medihack.org), released under the MIT license
