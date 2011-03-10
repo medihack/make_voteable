@@ -18,14 +18,8 @@ module MakeVoteable
   # class Question < ActiveRecord::Base
   #   make_voteable
   # end
-  def make_voteable
-    class_eval do
-      def self.voteable?
-        true
-      end
-
-      include Voteable
-    end
+  def make_voteable 
+    include Voteable
   end
 
   # Specify a model as voter.
@@ -35,13 +29,7 @@ module MakeVoteable
   #   make_voter
   # end
   def make_voter
-    class_eval do
-      def self.voter?
-        true
-      end
-
-      include Voter
-    end
+    include Voter
   end
 end
 

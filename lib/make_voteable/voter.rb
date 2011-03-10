@@ -1,5 +1,12 @@
 module MakeVoteable
   module Voter
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      def voter?
+        true
+      end
+    end
 
     # Up vote a +voteable+.
     # Raises an AlreadyVotedError if the voter already up voted the voteable.
