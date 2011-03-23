@@ -4,29 +4,25 @@ module MakeVoteable
       attr_reader :up_vote
 
       def initialize(up_vote)
-        @up_vote = up_vote
-      end
-      
-      def message
-        if @up_vote
-          vote = "up voted"
+        vote = if up_vote
+          "up voted"
         else
-          vote = "down voted"
+          "down voted"
         end
 
-        "The voteable was already #{vote} by the voter."
+        super "The voteable was already #{vote} by the voter."
       end
     end
 
     class NotVotedError < StandardError
-      def message
-        "The voteable was not voted by the voter."
+      def initialize
+        super "The voteable was not voted by the voter."
       end
     end
 
     class InvalidVoteableError < StandardError
-      def message
-        "Invalid voteable."
+      def initialize
+        super "Invalid voteable."
       end
     end
   end
