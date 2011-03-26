@@ -26,7 +26,7 @@ also add +up_votes+ and +down_votes+ columns to the voter (e.g. User) and voteab
 
 migrate the database
 
-  rails db:migrate
+  rake db:migrate
 
 == Usage
 
