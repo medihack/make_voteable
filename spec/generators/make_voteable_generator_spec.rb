@@ -16,7 +16,6 @@ describe MakeVoteableGenerator do
     end
 
     specify do
-      puts Dir.new(destination_root).entries
       destination_root.should have_structure {
         directory "db" do
           directory "migrate" do
