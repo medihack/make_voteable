@@ -1,5 +1,4 @@
 Gemfile.lock
-nbproject/*
 pkg/*
 doc/*
 *.gem
