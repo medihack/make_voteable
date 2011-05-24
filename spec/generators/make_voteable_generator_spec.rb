@@ -8,24 +8,21 @@ describe MakeVoteableGenerator do
   destination File.expand_path("/tmp", __FILE__)
   tests MakeVoteableGenerator
 
-  before { prepare_destination }
+  before do
+    prepare_destination
+    run_generator
+  end
 
-  context "no options" do
-    before do
-      run_generator
-    end
-
-    specify do
-      destination_root.should have_structure {
-        directory "db" do
-          directory "migrate" do
-            migration "create_make_voteable_tables" do
-              contains "class CreateMakeVoteableTables"
-              contains "create_table :votings"
-            end
+  specify do
+    destination_root.should have_structure {
+      directory "db" do
+        directory "migrate" do
+          migration "create_make_voteable_tables" do
+            contains "class CreateMakeVoteableTables"
+            contains "create_table :votings"
           end
         end
-      }
-    end
+      end
+    }
   end
 end
