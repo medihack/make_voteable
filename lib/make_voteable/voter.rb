@@ -40,6 +40,8 @@ module MakeVoteable
         voteable.save
         voting.save
       end
+
+      true
     end
 
     # Up votes the +voteable+, but doesn't raise an error if the votelable was already up voted.
@@ -47,8 +49,11 @@ module MakeVoteable
     def up_vote!(voteable)
       begin
         up_vote(voteable)
+        success = true
       rescue Exceptions::AlreadyVotedError
+        success = false
       end
+      success
     end
 
     # Down vote a +voteable+.
@@ -79,6 +84,8 @@ module MakeVoteable
         voteable.save
         voting.save
       end
+
+      true
     end
 
     # Down votes the +voteable+, but doesn't raise an error if the votelable was already down voted.
@@ -86,8 +93,11 @@ module MakeVoteable
     def down_vote!(voteable)
       begin
         down_vote(voteable)
+        success = true
       rescue Exceptions::AlreadyVotedError
+        success = false
       end
+      success
     end
 
     # Clears an already done vote on a +voteable+.
@@ -112,6 +122,8 @@ module MakeVoteable
         voteable.save
         voting.destroy
       end
+
+      true
     end
 
     # Clears an already done vote on a +voteable+, but doesn't raise an error if
@@ -119,8 +131,11 @@ module MakeVoteable
     def unvote!(voteable)
       begin
         unvote(voteable)
+        success = true
       rescue Exceptions::NotVotedError
+        success = false
       end
+      success
     end
 
     # Returns true if the voter voted for the +voteable+.

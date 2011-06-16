@@ -17,11 +17,11 @@ describe "Make Voteable" do
   end
 
   it "should get correct vote summary" do
-    @voter.up_vote(@voteable)
+    @voter.up_vote(@voteable).should == true
     @voteable.votes.should == 1
-    @voter.down_vote(@voteable)
+    @voter.down_vote(@voteable).should == true
     @voteable.votes.should == -1
-    @voter.unvote(@voteable)
+    @voter.unvote(@voteable).should == true
     @voteable.votes.should == 0
   end
 
@@ -83,7 +83,9 @@ describe "Make Voteable" do
 
     it "should only allow a voter to up vote a voteable once without raising an error" do
       @voter.up_vote!(@voteable)
-      lambda { @voter.up_vote!(@voteable) }.should_not raise_error(MakeVoteable::Exceptions::AlreadyVotedError)
+      lambda {
+        @voter.up_vote!(@voteable).should == false
+      }.should_not raise_error(MakeVoteable::Exceptions::AlreadyVotedError)
       MakeVoteable::Voting.count.should == 1
     end
 
@@ -155,7 +157,9 @@ describe "Make Voteable" do
 
     it "should only allow a voter to down vote a voteable once without raising an error" do
       @voter.down_vote!(@voteable)
-      lambda { @voter.down_vote!(@voteable) }.should_not raise_error(MakeVoteable::Exceptions::AlreadyVotedError)
+      lambda {
+        @voter.down_vote!(@voteable).should == false
+      }.should_not raise_error(MakeVoteable::Exceptions::AlreadyVotedError)
       MakeVoteable::Voting.count.should == 1
     end
 
@@ -219,7 +223,9 @@ describe "Make Voteable" do
     end
 
     it "should not raise error if voter didn't vote for the voteable and unvote! is called" do
-      lambda { @voter.unvote!(@voteable) }.should_not raise_error(MakeVoteable::Exceptions::NotVotedError)
+      lambda {
+        @voter.unvote!(@voteable).should == false
+      }.should_not raise_error(MakeVoteable::Exceptions::NotVotedError)
     end
 
     it "should raise an error for an invalid voteable" do
