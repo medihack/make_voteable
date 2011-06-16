@@ -2,6 +2,10 @@ module MakeVoteable
   module Voter
     extend ActiveSupport::Concern
 
+    included do
+      has_many :votings, :class_name => "MakeVoteable::Voting", :as => :voter
+    end
+
     module ClassMethods
       def voter?
         true

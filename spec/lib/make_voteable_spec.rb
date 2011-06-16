@@ -25,6 +25,34 @@ describe "Make Voteable" do
     @voteable.votes.should == 0
   end
 
+  it "voteable should have up vote votings" do
+    @voteable.votings.length.should == 0
+    @voter.up_vote(@voteable)
+    @voteable.votings.reload.length.should == 1
+    @voteable.votings[0].up_vote?.should be_true
+  end
+
+  it "voter should have up vote votings" do
+    @voter.votings.length.should == 0
+    @voter.up_vote(@voteable)
+    @voter.votings.reload.length.should == 1
+    @voter.votings[0].up_vote?.should be_true
+  end
+
+  it "voteable should have down vote votings" do
+    @voteable.votings.length.should == 0
+    @voter.down_vote(@voteable)
+    @voteable.votings.reload.length.should == 1
+    @voteable.votings[0].up_vote?.should be_false
+  end
+
+  it "voter should have down vote votings" do
+    @voter.votings.length.should == 0
+    @voter.down_vote(@voteable)
+    @voter.votings.reload.length.should == 1
+    @voter.votings[0].up_vote?.should be_false
+  end
+
   describe "up vote" do
     it "should increase up votes of voteable by one" do
       @voteable.up_votes.should == 0

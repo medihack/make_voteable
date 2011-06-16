@@ -90,6 +90,14 @@ migrate the database
   # Returns true if the question was down voted by the user, false otherwise
   user.down_voted?(question)
 
+  # Access votings through voter
+  voting = user.votings.first
+  voting.up_vote? # true if up vote, false if down vote
+
+  # Access votings through voteable
+  voting = question.votings.first
+  voting.up_vote? # true if up vote, false if down vote
+
 == Testing
 
 MakeVoteable uses RSpec for testing and has a rake task for executing the provided specs
