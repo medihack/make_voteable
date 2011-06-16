@@ -18,21 +18,21 @@ module MakeVoteable
 
       if voting
         if voting.up_vote
-          raise MakeVoteable::Exceptions::AlreadyVotedError.new(true)
+          raise Exceptions::AlreadyVotedError.new(true)
         else
           voting.up_vote = true
           voteable.down_votes -= 1
-          self.down_votes -= 1 if self.has_attribute?(:down_votes)
+          self.down_votes -= 1 if has_attribute?(:down_votes)
         end
       else
         voting = Voting.create(:voteable => voteable, :voter => self, :up_vote => true)
       end
 
       voteable.up_votes += 1
-      self.up_votes += 1 if self.has_attribute?(:up_votes)
+      self.up_votes += 1 if has_attribute?(:up_votes)
 
-      MakeVoteable::Voting.transaction do
-        self.save
+      Voting.transaction do
+        save
         voteable.save
         voting.save
       end
@@ -43,7 +43,7 @@ module MakeVoteable
     def up_vote!(voteable)
       begin
         up_vote(voteable)
-      rescue MakeVoteable::Exceptions::AlreadyVotedError
+      rescue Exceptions::AlreadyVotedError
       end
     end
 
@@ -57,21 +57,21 @@ module MakeVoteable
 
       if voting
         unless voting.up_vote
-          raise MakeVoteable::Exceptions::AlreadyVotedError.new(false)
+          raise Exceptions::AlreadyVotedError.new(false)
         else
           voting.up_vote = false
           voteable.up_votes -= 1
-          self.up_votes -= 1 if self.has_attribute?(:up_votes)
+          self.up_votes -= 1 if has_attribute?(:up_votes)
         end
       else
         voting = Voting.create(:voteable => voteable, :voter => self, :up_vote => false)
       end
 
       voteable.down_votes += 1
-      self.down_votes += 1 if self.has_attribute?(:down_votes)
+      self.down_votes += 1 if has_attribute?(:down_votes)
 
-      MakeVoteable::Voting.transaction do
-        self.save
+      Voting.transaction do
+        save
         voteable.save
         voting.save
       end
@@ -82,7 +82,7 @@ module MakeVoteable
     def down_vote!(voteable)
       begin
         down_vote(voteable)
-      rescue MakeVoteable::Exceptions::AlreadyVotedError
+      rescue Exceptions::AlreadyVotedError
       end
     end
 
@@ -93,18 +93,18 @@ module MakeVoteable
 
       voting = fetch_voting(voteable)
 
-      raise MakeVoteable::Exceptions::NotVotedError unless voting
+      raise Exceptions::NotVotedError unless voting
 
       if voting.up_vote
         voteable.up_votes -= 1
-        self.up_votes -= 1 if self.has_attribute?(:up_votes)
+        self.up_votes -= 1 if has_attribute?(:up_votes)
       else
         voteable.down_votes -= 1
-        self.down_votes -= 1 if self.has_attribute?(:down_votes)
+        self.down_votes -= 1 if has_attribute?(:down_votes)
       end
 
-      MakeVoteable::Voting.transaction do
-        self.save
+      Voting.transaction do
+        save
         voteable.save
         voting.destroy
       end
@@ -115,7 +115,7 @@ module MakeVoteable
     def unvote!(voteable)
       begin
         unvote(voteable)
-      rescue MakeVoteable::Exceptions::NotVotedError
+      rescue Exceptions::NotVotedError
       end
     end
 
@@ -153,7 +153,7 @@ module MakeVoteable
     end
 
     def check_voteable(voteable)
-      raise MakeVoteable::Exceptions::InvalidVoteableError unless voteable.class.voteable?
+      raise Exceptions::InvalidVoteableError unless voteable.class.voteable?
     end
   end
 end
