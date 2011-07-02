@@ -149,6 +149,7 @@ module MakeVoteable
     def up_voted?(voteable)
       check_voteable(voteable)
       voting = fetch_voting(voteable)
+      return false if voting.nil?
       return true if voting.has_attribute?(:up_vote) && voting.up_vote
       false
     end
@@ -157,6 +158,7 @@ module MakeVoteable
     def down_voted?(voteable)
       check_voteable(voteable)
       voting = fetch_voting(voteable)
+      return false if voting.nil?
       return true if voting.has_attribute?(:up_vote) && !voting.up_vote
       false
     end
