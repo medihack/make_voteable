@@ -25,6 +25,12 @@ ActiveRecord::Schema.define :version => 0 do
      t.timestamps
   end
 
+  create_table :users, :force => true do |t|
+    t.integer :up_votes, :null => false, :default => 0
+    t.integer :down_votes, :null => false, :default => 0
+    t.string  :type
+  end
+
   add_index :votings, [:voteable_type, :voteable_id]
   add_index :votings, [:voter_type, :voter_id]
   add_index :votings, [:voteable_type, :voteable_id, :voter_type, :voter_id], :name => "unique_voters", :unique => true
