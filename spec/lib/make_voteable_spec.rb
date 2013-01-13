@@ -1,5 +1,30 @@
 require File.expand_path('../../spec_helper', __FILE__)
 
+describe "Inheritance" do
+  let(:voteable) { VoteableModel.create(:name => "Votable 1") }
+
+  describe "user (User < ActiveRecord::Base)" do
+    let(:user) { User.create }
+
+    before(:each) do
+      user.up_vote(voteable)
+    end
+
+    it { MakeVoteable::Voting.first.voter_type.should == 'User' }
+  end
+
+  describe "admin (Admin < User)" do
+    let(:admin) { Admin.create }
+
+    before(:each) do
+      admin.up_vote(voteable)
+    end
+
+    it { MakeVoteable::Voting.first.voter_type.should == 'Admin' }
+    it { MakeVoteable::Voting.first.voter_type.should_not == 'User' }
+  end
+end
+
 describe "Make Voteable" do
   before(:each) do
     @voteable = VoteableModel.create(:name => "Votable 1")
