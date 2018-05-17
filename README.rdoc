@@ -3,6 +3,8 @@
 MakeVoteable is an extension for building a user-centric voting system for Rails 3 applications.
 It currently supports ActiveRecord models.
 
+* This repository is unfortunately no longer maintained. If you are a developer and want to maintain it I am happy to hand this repository over.
+
 == Installation
 
 add MakeVoteable to your Gemfile
